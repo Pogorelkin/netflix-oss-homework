@@ -20,7 +20,6 @@ class EmployeeAPIController {
     @RequestMapping("/{id}")
     def describeEmployee(@PathVariable("id") String id) {
         def employee = employeeService.findEmployee(id)
-
         [
                 id       : employee.id,
                 firstName: employee.firstName,

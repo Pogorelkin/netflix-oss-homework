@@ -5,3 +5,5 @@ spring:
     config:
       uri: http://${CONFIG_HOST:localhost}:8888
       failFast: true
+
+

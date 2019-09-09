@@ -1,15 +1,11 @@
 spring:
+  application:
+    name: config-server
   cloud:
     config:
       server:
-
-  profiles:
-     active: native
+        git:
+          uri: git://github.com/Pogorelkin/ms-config-server.git
 
 server:
   port: ${CONFIG_PORT:8888}
-
-  eureka:
-    client:
-      serviceUrl:
-        defaultZone: http://localhost:8282/

@@ -1,3 +1,6 @@
+server:
+  port: 9094
+
 endpoints:
   restart:
     enabled: true
@@ -8,5 +11,5 @@ endpoints:
 
 zuul:
   routes:
-    workspaces-api: /workspaces/**
-    employees-api: /employees/**
+    workspaces-api: /workspaces-service/**
+    employees-api: /employees-service/**

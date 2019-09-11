@@ -20,13 +20,12 @@ class EmployeeAPIController {
     @RequestMapping("/{id}")
     def describeEmployee(@PathVariable("id") String id) {
         def employee = employeeService.findEmployee(id)
-
         [
                 id       : employee.id,
                 firstName: employee.firstName,
                 lastName : employee.lastName,
                 email    : employee.email,
-                workspace: null // null? Nope. Let's request exact workspace by employee.workspaceId from workspaces-api. How? With feign client maybe?
+                workspace: workspaceAPIClient.getWorkspaceById(id)
         ]
     }
 }

@@ -2,20 +2,21 @@ ext {
     groovyVersion = '2.4.4'
 
     libpacks = [
-            spring_common: [
+            spring_common      : [
                     'org.springframework.boot:spring-boot-starter-web',
                     'org.springframework.boot:spring-boot-starter-actuator'
             ],
 
-            cloud_common: [
+            cloud_common       : [
                     'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client',
-                    'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+                    'org.springframework.cloud:spring-cloud-starter-netflix-hystrix',
+                    'org.springframework.cloud:spring-cloud-starter-sleuth'
             ],
 
             cloud_config_client: [
                     'org.springframework.cloud:spring-cloud-starter-config'
             ],
-            
+
             cloud_eureka_server: [
                     'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
             ],
@@ -24,34 +25,39 @@ ext {
                     'org.springframework.cloud:spring-cloud-config-server'
             ],
 
-            cloud_feign: [
+            cloud_feign        : [
                     'org.springframework.cloud:spring-cloud-starter-openfeign'
             ],
 
-            cloud_routing: [
+            cloud_routing      : [
                     'org.springframework.cloud:spring-cloud-starter-netflix-zuul'
             ],
 
-            spring: [
+            spring             : [
                     'org.springframework.boot:spring-boot-starter-actuator'
             ],
 
-            groovy : [
+            groovy             : [
                     "org.codehaus.groovy:groovy-all:${groovyVersion}"
             ],
 
-            logstash : [
-                    'net.logstash.logback:logstash-logback-encoder:4.4'
+            logstash           : [
+                    'net.logstash.logback:logstash-logback-encoder:4.11',
+                    'ch.qos.logback:logback-classic:1.2.3'
             ],
 
-            testing : [
+            testing            : [
                     'org.springframework.boot:spring-boot-starter-test',
                     'org.spockframework:spock-core:1.0-groovy-2.4',
                     'org.spockframework:spock-spring:1.0-groovy-2.0'
             ],
 
-            lombok : [
+            lombok             : [
                     'org.projectlombok:lombok:1.16.4'
+            ],
+
+            json               : [
+                    'org.json:json:20180813'
             ]
     ]
 }

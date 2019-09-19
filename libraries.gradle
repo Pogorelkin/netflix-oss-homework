@@ -58,6 +58,10 @@ ext {
 
             json               : [
                     'org.json:json:20180813'
+            ],
+
+            spring_data_mongo  : [
+                    'org.springframework.data:spring-data-mongodb:2.1.10.RELEASE'
             ]
     ]
 }

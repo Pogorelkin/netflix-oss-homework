@@ -1,10 +1,13 @@
 package com.epam.hw.netflix.services;
 
+import com.epam.hw.netflix.dao.EmployeesDAO;
 import com.epam.hw.netflix.domain.Employee;
 import com.epam.hw.netflix.exceptions.NoEmployeeFoundException;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -12,6 +15,8 @@ import static java.lang.String.format;
 
 @Service
 public class EmployeeService {
+    @Autowired
+    EmployeesDAO employeesDAO;
 
     private List<Employee> employees = newArrayList(
             new Employee("0000001", "Ivan", "Ivanov", "Ivan_Ivanov@corpmail.com", "0000001"),
@@ -32,9 +37,12 @@ public class EmployeeService {
     );
 
     public Employee findEmployee(String id) {
-        return employees.stream()
-                .filter(employee -> StringUtils.equals(employee.getId(), id))
-                .findFirst()
-                .orElseThrow(() -> new NoEmployeeFoundException(format("No employee found for id: %s", id)));
+        return employeesDAO.findById(id).get();
+    }
+
+    @PostConstruct
+    private void init(){
+        employeesDAO.deleteAll();
+        employees.forEach(e -> employeesDAO.save(e));
     }
 }

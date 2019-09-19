@@ -10,4 +10,5 @@ dependencies {
     compile libpacks.groovy
     compile libpacks.logstash
     compile libpacks.json
+    compile libpacks.spring_data_mongo
 }

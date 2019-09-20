@@ -23,7 +23,7 @@ public class WorkspacesDAOImpl implements WorkspacesDAO {
 
     @Override
     public List<Workspace> findAll() {
-        return mongoTemplate.findAll(Workspace.class);
+        return mongoTemplate.findAll(Workspace.class, "workplaces");
     }
 
     @Override
@@ -35,12 +35,12 @@ public class WorkspacesDAOImpl implements WorkspacesDAO {
     public void update(Workspace workspace) {
         mongoTemplate.updateFirst(new Query().addCriteria((Criteria.where("id").is(workspace.getId()))),
                 new Update(),
-                Workspace.class);
+                Workspace.class, "workplaces");
     }
 
     @Override
     public void delete(Workspace workspace) {
-        mongoTemplate.remove(workspace);
+        mongoTemplate.remove(workspace, "workplaces");
     }
 
     @Override

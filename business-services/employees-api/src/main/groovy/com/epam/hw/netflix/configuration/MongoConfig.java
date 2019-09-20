@@ -16,7 +16,7 @@ import java.util.List;
 @Configuration
 @PropertySource("classpath:mongodb.properties")
 public class MongoConfig extends AbstractMongoConfiguration {
-    @Value("${spring.data.mongodb.database}")
+    @Value("${spring.data.mongodb.authentication-database}")
     private String database;
     @Value("${spring.data.mongodb.host}")
     private String host;

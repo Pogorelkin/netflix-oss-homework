@@ -37,12 +37,12 @@ public class EmployeeService {
     );
 
     public Employee findEmployee(String id) {
-        return employeesDAO.findById(id).get();
+        return employeesDAO.findById(id);
     }
 
     @PostConstruct
     private void init(){
-        employeesDAO.deleteAll();
-        employees.forEach(e -> employeesDAO.save(e));
+        employeesDAO.deleteCollection("employees");
+        employees.forEach(e -> employeesDAO.create(e));
     }
 }

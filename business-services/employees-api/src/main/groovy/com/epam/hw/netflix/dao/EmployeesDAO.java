@@ -1,8 +1,19 @@
 package com.epam.hw.netflix.dao;
 
 import com.epam.hw.netflix.domain.Employee;
-import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface EmployeesDAO extends MongoRepository<Employee, String> {
+import java.util.List;
 
+public interface EmployeesDAO {
+    void create(Employee employee);
+
+    List<Employee> findAll();
+
+    Employee findById(String s);
+
+    void update(Employee employee);
+
+    void delete(Employee employee);
+
+    void deleteCollection(String collection);
 }

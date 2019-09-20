@@ -16,7 +16,7 @@ import java.util.List;
 @Configuration
 @PropertySource("classpath:mongodb.properties")
 public class MongoConfig extends AbstractMongoConfiguration {
-    @Value("${spring.data.mongodb.database}")
+    @Value("${spring.data.mongodb.authentication-database}")
     private String database;
     @Value("${spring.data.mongodb.host}")
     private String host;
@@ -31,7 +31,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
     @Bean
     public MongoClient mongoClient() {
         List<MongoCredential> allCred = new ArrayList<>();
-        allCred.add(MongoCredential.createCredential(username, "admin", password.toCharArray()));
+        allCred.add(MongoCredential.createCredential(username, database, password.toCharArray()));
         return new MongoClient(new ServerAddress(host, Integer.parseInt(port)), allCred);
     }
 

@@ -3,39 +3,22 @@ package com.epam.hw.netflix.dao.impl;
 import com.epam.hw.netflix.dao.WorkspacesDAO;
 import com.epam.hw.netflix.domain.Workspace;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
+@Repository
 public class WorkspacesDAOImpl implements WorkspacesDAO {
     @Autowired
     MongoTemplate mongoTemplate;
 
     @Override
-    public <S extends Workspace> S save(S entity) {
-        return mongoTemplate.save(entity, "workplaces");
-    }
-
-    @Override
-    public <S extends Workspace> List<S> saveAll(Iterable<S> entities) {
-        return saveAll(entities);
-    }
-
-    @Override
-    public Optional<Workspace> findById(String s) {
-        return Optional.of(mongoTemplate.findById(s, Workspace.class));
-    }
-
-    @Override
-    public boolean existsById(String s) {
-        return false;
+    public void create(Workspace workspace) {
+        mongoTemplate.insert(workspace, "workplaces");
     }
 
     @Override
@@ -44,82 +27,24 @@ public class WorkspacesDAOImpl implements WorkspacesDAO {
     }
 
     @Override
-    public Iterable<Workspace> findAllById(Iterable<String> strings) {
-        return null;
+    public Workspace findById(String s) {
+        return mongoTemplate.findById(s, Workspace.class, "workplaces");
     }
 
     @Override
-    public long count() {
-        return 0;
+    public void update(Workspace workspace) {
+        mongoTemplate.updateFirst(new Query().addCriteria((Criteria.where("id").is(workspace.getId()))),
+                new Update(),
+                Workspace.class);
     }
 
     @Override
-    public void deleteById(String s) {
-        mongoTemplate.remove(Query.query(Criteria.where("id").is(s)), Workspace.class);
+    public void delete(Workspace workspace) {
+        mongoTemplate.remove(workspace);
     }
 
     @Override
-    public void delete(Workspace entity) {
-        mongoTemplate.remove(entity);
-    }
-
-    @Override
-    public void deleteAll(Iterable<? extends Workspace> entities) {
-
-    }
-
-    @Override
-    public void deleteAll() {
-        mongoTemplate.dropCollection(Workspace.class);
-    }
-
-    @Override
-    public List<Workspace> findAll(Sort sort) {
-        return null;
-    }
-
-    @Override
-    public Page<Workspace> findAll(Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public <S extends Workspace> S insert(S entity) {
-        return null;
-    }
-
-    @Override
-    public <S extends Workspace> List<S> insert(Iterable<S> entities) {
-        return null;
-    }
-
-    @Override
-    public <S extends Workspace> Optional<S> findOne(Example<S> example) {
-        return Optional.empty();
-    }
-
-    @Override
-    public <S extends Workspace> List<S> findAll(Example<S> example) {
-        return null;
-    }
-
-    @Override
-    public <S extends Workspace> List<S> findAll(Example<S> example, Sort sort) {
-        return null;
-    }
-
-    @Override
-    public <S extends Workspace> Page<S> findAll(Example<S> example, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public <S extends Workspace> long count(Example<S> example) {
-        return 0;
-    }
-
-    @Override
-    public <S extends Workspace> boolean exists(Example<S> example) {
-        return mongoTemplate.exists(Query.query(Criteria.where("id").is(example.getProbe().getId())), Workspace.class);
+    public void deleteCollection(String collection) {
+        mongoTemplate.dropCollection(collection);
     }
 }

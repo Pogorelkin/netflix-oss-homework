@@ -36,12 +36,12 @@ public class WorkplaceService {
     );
 
     public Workspace findWorkspace(String id) {
-        return workspacesDAO.findById(id).get();
+        return workspacesDAO.findById(id);
     }
 
     @PostConstruct
     private void init() {
-        workspacesDAO.deleteAll();
-        workspaces.forEach(e -> workspacesDAO.save(e));
+        System.out.println("insert init values");
+        workspaces.forEach(e -> workspacesDAO.create(e));
     }
 }

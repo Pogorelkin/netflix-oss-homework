@@ -16,4 +16,12 @@ public interface EmployeesDAO {
     void delete(Employee employee);
 
     void deleteCollection(String collection);
+
+    Employee findByIdAndName(String id, String name);
+
+    Employee findWithMaxId();
+
+    String findAvgId();
+
+    void updIfId(String string);
 }

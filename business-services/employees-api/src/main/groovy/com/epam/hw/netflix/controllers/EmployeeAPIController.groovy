@@ -2,7 +2,6 @@ package com.epam.hw.netflix.controllers
 
 import com.epam.hw.netflix.api.WorkspaceAPI
 import com.epam.hw.netflix.services.EmployeeService
-import org.apache.logging.log4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PathVariable
@@ -31,5 +30,39 @@ class EmployeeAPIController {
                 email    : employee.email,
                 workspace: workspaceAPIClient.getWorkspaceById(id)
         ]
+    }
+
+    @RequestMapping("/max")
+    def findMax() {
+        def employee = employeeService.findMaxEmployee()
+        [
+                id       : employee.id,
+                firstName: employee.firstName,
+                lastName : employee.lastName,
+                email    : employee.email,
+                workspace: workspaceAPIClient.getWorkspaceById(id)
+        ]
+    }
+
+    @RequestMapping("find/{id}/{name}")
+    def findByIdAndName(@PathVariable("id") String id, @PathVariable("name") String name) throws RuntimeException {
+        def employee = employeeService.findByIdAndName(id, name)
+        [
+                id       : employee.id,
+                firstName: employee.firstName,
+                lastName : employee.lastName,
+                email    : employee.email,
+                workspace: workspaceAPIClient.getWorkspaceById(id)
+        ]
+    }
+
+    @RequestMapping("/avg")
+    def findAvg() {
+        [avgEmployeeId: employeeService.findAvgId()]
+    }
+
+    @RequestMapping("/all")
+    def findAll(){
+        return employeeService.findAll();
     }
 }

@@ -11,6 +11,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 @PropertySource("classpath:mongodb.properties")
 public class MongoConfig extends AbstractMongoConfiguration {
@@ -18,8 +21,12 @@ public class MongoConfig extends AbstractMongoConfiguration {
     private String database;
     @Value("${spring.data.mongodb.host}")
     private String host;
-    @Value("${spring.data.mongodb..port}")
-    private String port;
+    @Value("${spring.data.mongodb..port1}")
+    private String port1;
+    @Value("${spring.data.mongodb..port2}")
+    private String port2;
+    @Value("${spring.data.mongodb..port3}")
+    private String port3;
     @Value("${spring.data.mongodb..username}")
     private String username;
     @Value("${spring.data.mongodb..password}")
@@ -28,7 +35,11 @@ public class MongoConfig extends AbstractMongoConfiguration {
     @Override
     @Bean
     public MongoClient mongoClient() {
-        return new MongoClient(new ServerAddress(host, Integer.parseInt(port)),
+        List<ServerAddress> seeds = new ArrayList<>();
+        seeds.add(new ServerAddress(host, Integer.parseInt(port1)));
+        seeds.add(new ServerAddress(host, Integer.parseInt(port2)));
+        seeds.add(new ServerAddress(host, Integer.parseInt(port3)));
+        return new MongoClient(seeds,
                 MongoCredential.createCredential(username, database, password.toCharArray()),
                 MongoClientOptions.builder().build());
     }

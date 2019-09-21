@@ -1,6 +1,7 @@
 package com.epam.hw.netflix.configuration;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,9 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.core.MongoTemplate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
 @PropertySource("classpath:mongodb.properties")
@@ -30,9 +28,9 @@ public class MongoConfig extends AbstractMongoConfiguration {
     @Override
     @Bean
     public MongoClient mongoClient() {
-        List<MongoCredential> allCred = new ArrayList<>();
-        allCred.add(MongoCredential.createCredential(username, database, password.toCharArray()));
-        return new MongoClient(new ServerAddress(host, Integer.parseInt(port)), allCred);
+        return new MongoClient(new ServerAddress(host, Integer.parseInt(port)),
+                MongoCredential.createCredential(username, database, password.toCharArray()),
+                MongoClientOptions.builder().build());
     }
 
     @Override

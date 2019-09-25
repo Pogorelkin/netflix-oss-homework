@@ -3,11 +3,11 @@ import net.logstash.logback.appender.LogstashTcpSocketAppender
 import net.logstash.logback.encoder.LogstashEncoder
 
 def appHost = "localhost"
-def appName = "employees-api"
+def appName = "orders-api"
 def logstashHost = "localhost"
 def logstashPort = 5000
 
-println "-" * 80
+println "=" * 80
 println """
     APP NAME        : $appName
     APP HOST        : $appHost

@@ -62,6 +62,10 @@ ext {
 
             spring_data_mongo  : [
                     'org.springframework.data:spring-data-mongodb:2.1.10.RELEASE'
+            ],
+
+            spring_kafka : [
+                    'org.springframework.kafka:spring-kafka'
             ]
     ]
 }

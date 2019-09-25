@@ -15,5 +15,5 @@ public interface WorkspacesDAO {
 
     void delete(Workspace workspace);
 
-    void deleteCollection(String collection);
+    void deleteCollection();
 }

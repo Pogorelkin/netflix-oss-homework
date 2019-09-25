@@ -1,5 +1,4 @@
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder
-import ch.qos.logback.core.ConsoleAppender
 import net.logstash.logback.appender.LogstashTcpSocketAppender
 import net.logstash.logback.encoder.LogstashEncoder
 
@@ -19,8 +18,8 @@ println "=" * 80
 
 def appenderList = []
 
-if (logstashHost){
-    appender("logback", LogstashTcpSocketAppender){
+if (logstashHost) {
+    appender("logback", LogstashTcpSocketAppender) {
         remoteHost = logstashHost
         port = logstashPort.toInteger()
         encoder(LogstashEncoder)
@@ -28,8 +27,8 @@ if (logstashHost){
     appenderList << 'logback'
 }
 
-appender("console", ConsoleAppender){
-    encoder(PatternLayoutEncoder){
+appender("console", ConsoleAppender) {
+    encoder(PatternLayoutEncoder) {
         pattern = "%-4relative %d %-5level [ %t ] %-5logger{13} | %m %n"
     }
 }

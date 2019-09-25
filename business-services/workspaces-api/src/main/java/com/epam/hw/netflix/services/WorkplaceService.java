@@ -42,7 +42,7 @@ public class WorkplaceService {
     @PostConstruct
     private void init() {
         System.out.println("insert init values");
-        workspacesDAO.deleteCollection("workplaces");
+        workspacesDAO.deleteCollection();
         workspaces.forEach(e -> workspacesDAO.create(e));
     }
 }

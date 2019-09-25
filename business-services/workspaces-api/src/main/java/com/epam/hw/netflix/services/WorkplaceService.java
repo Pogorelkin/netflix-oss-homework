@@ -1,21 +1,21 @@
 package com.epam.hw.netflix.services;
 
+import com.epam.hw.netflix.dao.WorkspacesDAO;
 import com.epam.hw.netflix.domain.Workspace;
-import com.epam.hw.netflix.exceptions.NoWorkspaceFoundException;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
-import static com.epam.hw.netflix.domain.OSFamily.LINUX;
-import static com.epam.hw.netflix.domain.OSFamily.OSX;
-import static com.epam.hw.netflix.domain.OSFamily.WINDOWS;
+import static com.epam.hw.netflix.domain.OSFamily.*;
 import static com.google.common.collect.Lists.newArrayList;
-import static java.lang.String.format;
 import static java.util.UUID.randomUUID;
 
 @Service
 public class WorkplaceService {
+    @Autowired
+    WorkspacesDAO workspacesDAO;
 
     private final List<Workspace> workspaces = newArrayList(
             new Workspace("0000001", 1, 1, randomUUID().toString(), WINDOWS),
@@ -36,9 +36,13 @@ public class WorkplaceService {
     );
 
     public Workspace findWorkspace(String id) {
-        return workspaces.stream()
-                .filter(w -> StringUtils.equals(w.getId(), id))
-                .findFirst()
-                .orElseThrow(() -> new NoWorkspaceFoundException(format("No workspace found with id: %s", id)));
+        return workspacesDAO.findById(id);
+    }
+
+    @PostConstruct
+    private void init() {
+        System.out.println("insert init values");
+        workspacesDAO.deleteCollection("workplaces");
+        workspaces.forEach(e -> workspacesDAO.create(e));
     }
 }

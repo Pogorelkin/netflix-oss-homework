@@ -1,17 +1,19 @@
 package com.epam.hw.netflix.services;
 
+import com.epam.hw.netflix.dao.EmployeesDAO;
 import com.epam.hw.netflix.domain.Employee;
-import com.epam.hw.netflix.exceptions.NoEmployeeFoundException;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static java.lang.String.format;
 
 @Service
 public class EmployeeService {
+    @Autowired
+    EmployeesDAO employeesDAO;
 
     private List<Employee> employees = newArrayList(
             new Employee("0000001", "Ivan", "Ivanov", "Ivan_Ivanov@corpmail.com", "0000001"),
@@ -32,9 +34,32 @@ public class EmployeeService {
     );
 
     public Employee findEmployee(String id) {
-        return employees.stream()
-                .filter(employee -> StringUtils.equals(employee.getId(), id))
-                .findFirst()
-                .orElseThrow(() -> new NoEmployeeFoundException(format("No employee found for id: %s", id)));
+        return employeesDAO.findById(id);
+    }
+
+    public Employee findMaxEmployee() {
+        return employeesDAO.findWithMaxId();
+    }
+
+    public Employee findByIdAndName(String id, String name) {
+        return employeesDAO.findByIdAndName(id, name);
+    }
+
+    public String findAvgId() {
+        return employeesDAO.findAvgId();
+    }
+
+    public void updateifId(String id) {
+        employeesDAO.updIfId(id);
+    }
+
+    @PostConstruct
+    private void init() {
+        employeesDAO.deleteCollection("employees");
+        employees.forEach(e -> employeesDAO.create(e));
+    }
+
+    public List<Employee> findAll(){
+        return employeesDAO.findAll();
     }
 }

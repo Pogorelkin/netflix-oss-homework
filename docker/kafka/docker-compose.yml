@@ -1,0 +1,38 @@
+version: '3.1'
+
+services:
+  zookeeper:
+    container_name: zookeeper
+    image: confluent/zookeeper
+    restart: always
+    ports:
+      - 2181:2181
+
+  kafka:
+    container_name: kafka
+    image: confluent/kafka
+    depends_on:
+      - zookeeper
+    restart: on-failure
+    ports:
+      - 9092:9092
+
+  schema-registry:
+    container_name: schema-registry
+    image: confluent/schema-registry
+    depends_on:
+      - zookeeper
+      - kafka
+    restart: on-failure
+    ports:
+      - 8081:8081
+
+  rest-proxy:
+    container_name: rest-proxy
+    image: confluent/rest-proxy
+    ports:
+      - 8082:8082
+    depends_on:
+      - zookeeper
+      - kafka
+      - schema-registry
